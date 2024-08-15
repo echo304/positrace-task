@@ -1,0 +1,1 @@
+create role posistrace_task with CREATEDB login password 'posistrace_task';
