@@ -1,1 +1,1 @@
-create role posistrace_task with CREATEDB login password 'posistrace_task';
+create role positrace_task with CREATEDB login password 'positrace_task';

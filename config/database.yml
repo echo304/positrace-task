@@ -22,7 +22,7 @@ default: &default
   username: <%= ENV['DATABASE_USER'] || "positrace_task" %>
   password: <%= ENV['DATABASE_PASSWORD'] || "positrace_task" %>
   port: <%= ENV['DATABASE_PORT'] || "5432" %>
-  host: <%= ENV['DATABASE_HOST'] || "127.0.0.1" %>
+  host: <%= ENV['DATABASE_HOST'] || "localhost" %>
 
 development:
   <<: *default
