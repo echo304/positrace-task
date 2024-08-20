@@ -26,7 +26,8 @@ docker-compose up
 
 ### Database
 
-- For the purpose of this test, I used sqlite3 as the database. So no need to setup any database.
+- For the purpose of this test, I used postgresql as the database. And it will be running with docker. So if you run the
+  app with docker, you don't need to setup any database.
 
 #### Database initialization
 
@@ -49,6 +50,11 @@ bin/rails db:reset
 
 - Make sure you have proper Ruby version installed
 - Run the following commands in the root directory of the project
+- Make sure you have PostgreSQL running in your local machine with the following configurations
+    - username: `positrace_task`
+    - password: `positrace_task`
+    - host: `localhost`
+    - port: `5432`
 
 ```bash
 bundle install
@@ -59,6 +65,27 @@ bin/rails server
 
 ### Authentication
 
+- The API is protected with API key authentication. You need to provide the API key in the request headers to access the
+  API
+- API authentication is implemented in `ApiKeysController`, `ApiKeyAuthenticatable` and `ApiKeys` model
+- To secure the API key, it is stored in the database after hashing with `SHA256` algorithm
+
+### Components
+
+- **Geolocation**: It is the main component of this application. It is responsible for fetching geolocation data from
+  `ipstack` API and storing it in the database
+- **User**: It is the user model of the application. It is used for authentication purpose
+- **ApiKeys**: It is the model to store the API keys for authentication purpose
+- **ApiKeysController**: It is the controller to manage the API keys
+- **ApiKeyAuthenticatable**: It is the module to authenticate the API keys
+- **GeolocationsController**: It is the controller to manage the geolocation data
+
+#### Why I didn't use PostGIS?
+- TL;DR: PostGIS is an overkill for this application. It is a spatial database extender for PostgreSQL object-relational
+  database. It adds support for geographic objects allowing location queries to be run in SQL. But for this application,
+  we don't need to run any location queries in SQL. We are just fetching the geolocation data from `ipstack` API and
+  storing it in the database. So, using PostGIS will be an overkill for this application
+- https://blog.rebased.pl/2020/04/07/why-you-probably-dont-need-postgis.html
 
 ### API
 

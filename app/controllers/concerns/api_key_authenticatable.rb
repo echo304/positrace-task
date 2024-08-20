@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module ApiKeyAuthenticatable
-  extend ActiveSupport::Concern
-
   include ActionController::HttpAuthentication::Basic::ControllerMethods
   include ActionController::HttpAuthentication::Token::ControllerMethods
+
+  extend ActiveSupport::Concern
 
   attr_reader :current_api_key
   attr_reader :current_bearer
@@ -22,8 +22,8 @@ module ApiKeyAuthenticatable
   attr_writer :current_api_key
   attr_writer :current_bearer
 
-  def authenticator(http_token, options)
-    @current_api_key = ApiKey.find_by token: http_token
+  def authenticator(token, options)
+    @current_api_key = ApiKey.authenticate_by_token token
 
     current_api_key&.bearer
   end
