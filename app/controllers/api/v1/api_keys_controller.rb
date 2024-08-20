@@ -26,9 +26,12 @@ module Api
       end
 
       def destroy
-        api_key = current_bearer.api_keys.find(params[:id])
-
-        api_key.destroy
+        begin
+          api_key = current_bearer.api_keys.find(params[:id])
+          api_key.destroy
+        rescue ActiveRecord::RecordNotFound
+          render status: :not_found and return
+        end
       end
     end
   end

@@ -8,6 +8,7 @@ class ApiKey < ApplicationRecord
 
   # Virtual attribute for raw token value, allowing us to respond with the
   # API key's non-hashed token value. but only directly after creation.
+  # This is not stored in the database and that's why it's not possible to get the token value after the object is created.
   attr_accessor :token
 
   belongs_to :bearer, polymorphic: true
@@ -27,7 +28,7 @@ class ApiKey < ApplicationRecord
   end
 
   def serializable_hash(options = nil)
-    h = super options.merge(except: 'token_digest')
+    h = super (options || {}).merge(except: 'token_digest')
     h.merge! 'token' => token if token.present?
     h
   end
