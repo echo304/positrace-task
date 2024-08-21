@@ -9,10 +9,10 @@ Rails.application.configure do
   config.enable_reloading = true
 
   # Do not eager load code on boot.
-  config.eager_load = false
+  config.eager_load = true
 
   # Show full error reports.
-  config.consider_all_requests_local = true
+  config.consider_all_requests_local = false
 
   # Enable server timing
   config.server_timing = true
@@ -37,6 +37,11 @@ Rails.application.configure do
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
+
+  # Set logger to STDOUT
+  config.logger = ActiveSupport::Logger.new(STDOUT)
+                                       .tap { |logger| logger.formatter = ::Logger::Formatter.new }
+                                       .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
   # Raise exceptions for disallowed deprecations.
   config.active_support.disallowed_deprecation = :raise
@@ -63,3 +68,5 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 end
+
+Rails.application.routes.default_url_options[:host] = 'localhost:3000'

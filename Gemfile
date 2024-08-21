@@ -32,11 +32,15 @@ gem "bootsnap", require: false
 # HTTP client wrapper
 gem 'faraday'
 
+# JSON API serializer
+gem 'jsonapi-rails'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
   gem 'rspec-rails', '~> 6.1.0'
   gem "factory_bot_rails", "~> 6.4"
+  gem 'faker'
 end
 
 group :development do

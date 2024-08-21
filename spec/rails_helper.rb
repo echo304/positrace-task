@@ -66,7 +66,8 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  config.include(ControllerMacros, :type => :controller)
+  config.include ControllerMacros, type: :controller
+  config.include JsonResponse, type: :controller
 
   # config.around do |example|
   #   # keep old adapter to use after test runs

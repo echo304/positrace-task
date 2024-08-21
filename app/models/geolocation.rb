@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'resolv'
+
 class Geolocation < ApplicationRecord
   validates :ip_address, presence: true, uniqueness: true, format: { with: Resolv::AddressRegex }
   validates :country, presence: true
