@@ -6,8 +6,6 @@ services:
     image: postgres:14
     volumes:
       - db_pg_data:/var/lib/postgresql/data
-      # Host mount for one-time initialization.
-      # Format is "./path/on/host:/path/in/container"
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
@@ -17,11 +15,11 @@ services:
     build: ./
     command: bash -c bin/start.sh
     environment:
-      GEOLOCATION_ACCESS_KEY: 2961338a7fc8ef8f2ed397df9c3a5480 # add your own key
+      GEOLOCATION_ACCESS_KEY: {{YOUR_ACCESS_KEY}} # add your own key
       GEOLOCATION_URL: http://api.ipstack.com/
     ports:
       - 3000:3000
     volumes:
-      - .:/docker/app # add our local code to dockerfile
+      - .:/docker/app
     extra_hosts:
       - localhost:host-gateway
