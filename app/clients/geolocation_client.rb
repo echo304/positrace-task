@@ -2,7 +2,12 @@
 
 class GeolocationClient
   cattr_accessor :adapter
-  self.adapter = IpStack
+
+  # Adapter is set to IpStack by default
+  # To change the adapter, set the adapter to the desired adapter class
+  # Example: GeolocationClient.adapter = AnotherGeolocationProvider
+  # The adapter class must implement a fetch_geolocation method that returns a Geolocation object
+  self.adapter = GeolocationAdapters::IpStack
 
   def initialize
     @client = adapter.new
@@ -11,7 +16,7 @@ class GeolocationClient
   def fetch_geolocation(ip)
     begin
       @client.fetch_geolocation(ip)
-    rescue Error => e
+    rescue StandardError => e
       Rails.logger.error("Call to Geolocation external service failed: #{e.message}")
       raise GeolocationClientError, e.message
     end
